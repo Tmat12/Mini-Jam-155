@@ -35,3 +35,11 @@ func reset_wind(new_wind_dir):
 	up_img.texture = outline_textures[1]
 	left_img.texture = outline_textures[2]
 	right_img.texture = outline_textures[3]
+
+
+func _on_timer_timeout():
+	var boats : Array[Node]
+	boats = get_tree().get_nodes_in_group("Boat")
+	for boat in boats:
+		boat.move_ship()
+	

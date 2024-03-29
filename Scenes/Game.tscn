@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cb3vt6puwj6f4"]
+[gd_scene load_steps=16 format=3 uid="uid://cb3vt6puwj6f4"]
 
 [ext_resource type="Script" path="res://Scripts/SeaManager.gd" id="1_wqkxv"]
 [ext_resource type="Texture2D" uid="uid://bwwukpi6dp0jr" path="res://Sprites/switch_up_outline.png" id="1_y2and"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bu1bx6xxhhmxs" path="res://Sprites/switch_up.png" id="7_x8g40"]
 [ext_resource type="Texture2D" uid="uid://cbmgvt5hleepi" path="res://Sprites/switch_left.png" id="8_2065r"]
 [ext_resource type="Texture2D" uid="uid://ts26bm0pt141" path="res://Sprites/switch_right.png" id="9_fh76d"]
-[ext_resource type="Script" path="res://Scripts/Boat.gd" id="11_6os3e"]
+[ext_resource type="PackedScene" uid="uid://b8lkcdnj1blpi" path="res://Scenes/boat.tscn" id="11_n34qi"]
 [ext_resource type="PackedScene" uid="uid://dbvag52ypk4c4" path="res://Scenes/rock.tscn" id="12_4tsfg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fwnn3"]
@@ -3269,9 +3269,6 @@ separation = Vector2i(1, 1)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_8oxdu")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_resim"]
-size = Vector2(14, 14)
-
 [node name="Game" type="Node2D" node_paths=PackedStringArray("down_img", "up_img", "left_img", "right_img")]
 script = ExtResource("1_wqkxv")
 down_img = NodePath("CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Down")
@@ -3360,45 +3357,15 @@ tile_set = SubResource("TileSet_0efym")
 format = 2
 layer_0/tile_data = PackedInt32Array(851968, 327680, 2, 851969, 327680, 2, 851970, 327680, 2, 851971, 327680, 2, 851972, 327680, 2, 851973, 327680, 2, 851974, 327680, 2, 851975, 327680, 2, 851976, 327680, 2, 851977, 327680, 2, 851978, 327680, 2, 851979, 327680, 2, 851980, 327680, 2, 851981, 327680, 2, 851982, 327680, 2, 851983, 327680, 2, 851984, 327680, 2, 851985, 327680, 2, 851986, 327680, 2, 851987, 327680, 2, 851988, 327680, 2, 851989, 327680, 2, 851990, 327680, 2, 851991, 327680, 2, 851992, 327680, 2, 786456, 327680, 2, 720920, 327680, 2, 786455, 327680, 2, 720919, 327680, 2, 655383, 327680, 2, 589847, 327680, 2, 524311, 327680, 2, 458775, 327680, 2, 393239, 327680, 2, 327703, 327680, 2, 262167, 327680, 2, 196631, 327680, 2, 196632, 327680, 2, 131095, 327680, 2, 65559, 327680, 2, 23, 327680, 2, -65513, 327680, 2, -65514, 327680, 2, -65515, 327680, 2, -65516, 327680, 2, -65517, 327680, 2, -65518, 327680, 2, -65519, 327680, 2, -65520, 327680, 2, -65521, 327680, 2, -65522, 327680, 2, -65523, 327680, 2, -65524, 327680, 2, -65525, 327680, 2, -65526, 327680, 2, -65527, 327680, 2, -65528, 327680, 2, -65529, 327680, 2, -65530, 327680, 2, -65531, 327680, 2, -65532, 327680, 2, -65533, 327680, 2, -65534, 327680, 2, -65535, 327680, 2, -65536, 327680, 2, 0, 327680, 2, 1, 327680, 2, 2, 327680, 2, 3, 327680, 2, 4, 327680, 2, 5, 327680, 2, 6, 327680, 2, 7, 327680, 2, 8, 327680, 2, 9, 327680, 2, 10, 327680, 2, 11, 327680, 2, 12, 327680, 2, 13, 327680, 2, 14, 327680, 2, 15, 327680, 2, 16, 327680, 2, 17, 327680, 2, 18, 327680, 2, 19, 327680, 2, 20, 327680, 2, 21, 327680, 2, 22, 327680, 2, -1, 327680, 2, 65535, 327680, 2, 131071, 327680, 2, 196607, 327680, 2, 262143, 327680, 2, 327679, 327680, 2, 393215, 327680, 2, 458751, 327680, 2, 524287, 327680, 2, 589823, 327680, 2, 655359, 327680, 2, 720895, 327680, 2, 786431, 327680, 2, 851967, 327680, 2, 917503, 327680, 2, 917502, 327680, 2, 917501, 327680, 2, 851966, 327680, 2, 786430, 327680, 2, 720894, 327680, 2, 720893, 327680, 2, 655357, 327680, 2, 655358, 327680, 2, 589822, 327680, 2, 524286, 327680, 2, 458750, 327680, 2, 393214, 327680, 2, 327678, 327680, 2, 262142, 327680, 2, 196606, 327680, 2, 131070, 327680, 2, 65534, 327680, 2, -2, 327680, 2, 917504, 327680, 2, 917505, 327680, 2, 917506, 327680, 2, 917507, 327680, 2, 917508, 327680, 2, 917509, 327680, 2, 917510, 327680, 2, 917511, 327680, 2, 917512, 327680, 2, 917513, 327680, 2, 917514, 327680, 2, 917515, 327680, 2, 917516, 327680, 2, 917521, 327680, 2, 917522, 327680, 2, 917523, 327680, 2, 917525, 327680, 2, 917526, 327680, 2, 917524, 327680, 2, 917520, 327680, 2, 917519, 327680, 2, 917518, 327680, 2, 917517, 327680, 2, 65536, 327680, 2, 131072, 327680, 2, 196608, 327680, 2, 262144, 327680, 2, 327680, 327680, 2, 393216, 327680, 2, 458752, 327680, 2, 524288, 327680, 2, 589824, 327680, 2, 655360, 327680, 2, 720896, 327680, 2, 786432, 327680, 2, 786433, 327680, 2, 786434, 327680, 2, 786435, 327680, 2, 786436, 327680, 2, 786437, 327680, 2, 786438, 327680, 2, 786439, 327680, 2, 786440, 327680, 2, 786441, 327680, 2, 786442, 327680, 2, 786443, 327680, 2, 786444, 327680, 2, 786445, 327680, 2, 786446, 327680, 2, 786447, 327680, 2, 786448, 327680, 2, 786449, 327680, 2, 786450, 327680, 2, 786451, 327680, 2, 786452, 327680, 2, 786453, 327680, 2, 786454, 327680, 2)
 
-[node name="Boat" type="CharacterBody2D" parent="." node_paths=PackedStringArray("horizontal_texture", "up_texture", "down_texture")]
-position = Vector2(72, 72)
-scale = Vector2(3, 3)
-script = ExtResource("11_6os3e")
-horizontal_texture = NodePath("Horizontal")
-up_texture = NodePath("Up")
-down_texture = NodePath("Down")
-
-[node name="Horizontal" type="Sprite2D" parent="Boat"]
-modulate = Color(0.721569, 0.431373, 0.156863, 1)
-texture = ExtResource("5_qiy4p")
-hframes = 49
-vframes = 22
-frame = 942
-
-[node name="Up" type="Sprite2D" parent="Boat"]
-visible = false
-modulate = Color(0.721569, 0.431373, 0.156863, 1)
-texture = ExtResource("5_qiy4p")
-hframes = 49
-vframes = 22
-frame = 940
-
-[node name="Down" type="Sprite2D" parent="Boat"]
-visible = false
-modulate = Color(0.721569, 0.431373, 0.156863, 1)
-texture = ExtResource("5_qiy4p")
-hframes = 49
-vframes = 22
-frame = 941
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boat"]
-position = Vector2(-0.333344, 0.333328)
-shape = SubResource("RectangleShape2D_resim")
-
-[node name="Timer" type="Timer" parent="."]
-autostart = true
+[node name="Boat" parent="." instance=ExtResource("11_n34qi")]
 
 [node name="Rock" parent="." instance=ExtResource("12_4tsfg")]
 position = Vector2(313, 217)
 
-[connection signal="timeout" from="Timer" to="Boat" method="_on_timer_timeout"]
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Boat2" parent="." instance=ExtResource("11_n34qi")]
+position = Vector2(73, 553)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
