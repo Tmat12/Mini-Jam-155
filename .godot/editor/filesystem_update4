@@ -1,1 +1,10 @@
 res://Scenes/Main.tscn
+res://Scripts/Player.gd
+res://Scripts/GameManager.gd
+res://Scenes/crate.tscn
+res://Scripts/TestingArea.gd
+res://Scenes/Demo.tscn
+res://Scenes/Game.tscn
+res://Scripts/game_data.gd
+res://Scripts/SeaManager.gd
+res://Scripts/Boat.gd

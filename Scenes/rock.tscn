@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbvag52ypk4c4"]
+
+[ext_resource type="Texture2D" uid="uid://c5fhaoqp6dk86" path="res://Sprites/monochrome-transparent.png" id="1_yeese"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6kjgk"]
+size = Vector2(16, 12.3333)
+
+[node name="Rock" type="Area2D"]
+position = Vector2(217, 217)
+scale = Vector2(3, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.392157, 0.392157, 0.392157, 1)
+texture = ExtResource("1_yeese")
+hframes = 49
+vframes = 22
+frame = 103
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.333334, 0.166664)
+shape = SubResource("RectangleShape2D_6kjgk")
