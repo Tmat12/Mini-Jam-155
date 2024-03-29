@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cb3vt6puwj6f4"]
+[gd_scene load_steps=18 format=3 uid="uid://cb3vt6puwj6f4"]
 
 [ext_resource type="Script" path="res://Scripts/SeaManager.gd" id="1_wqkxv"]
 [ext_resource type="Texture2D" uid="uid://bwwukpi6dp0jr" path="res://Sprites/switch_up_outline.png" id="1_y2and"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ts26bm0pt141" path="res://Sprites/switch_right.png" id="9_fh76d"]
 [ext_resource type="PackedScene" uid="uid://b8lkcdnj1blpi" path="res://Scenes/boat.tscn" id="11_n34qi"]
 [ext_resource type="PackedScene" uid="uid://dbvag52ypk4c4" path="res://Scenes/rock.tscn" id="12_4tsfg"]
+[ext_resource type="Script" path="res://scripts/Obstacle.gd" id="13_yj0rb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fwnn3"]
 bg_color = Color(0, 0, 0, 0.772549)
@@ -3269,6 +3270,9 @@ separation = Vector2i(1, 1)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_8oxdu")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_81egp"]
+size = Vector2(14, 13)
+
 [node name="Game" type="Node2D" node_paths=PackedStringArray("down_img", "up_img", "left_img", "right_img")]
 script = ExtResource("1_wqkxv")
 down_img = NodePath("CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Down")
@@ -3368,4 +3372,22 @@ autostart = true
 [node name="Boat2" parent="." instance=ExtResource("11_n34qi")]
 position = Vector2(72, 552)
 
+[node name="Obstacle" type="Area2D" parent="." node_paths=PackedStringArray("sprite")]
+position = Vector2(553, 217)
+scale = Vector2(3, 3)
+script = ExtResource("13_yj0rb")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Obstacle"]
+modulate = Color(0.721569, 0.431373, 0.156863, 1)
+texture = ExtResource("5_qiy4p")
+hframes = 49
+vframes = 22
+frame = 417
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_81egp")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Obstacle" to="Obstacle" method="_on_body_entered"]

@@ -1,5 +1,5 @@
 extends CharacterBody2D
-class_name Boat
+
 
 @export_category("Boat Textures")
 @export var horizontal_texture : Sprite2D
