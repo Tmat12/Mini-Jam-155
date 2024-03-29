@@ -3,3 +3,5 @@ res://Scenes/Demo.tscn
 res://Scenes/boat.tscn
 res://Scripts/SeaManager.gd
 res://Scripts/Boat.gd
+res://Scenes/rock.tscn
+res://Scripts/rock.gd
