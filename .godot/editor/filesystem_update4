@@ -1,10 +1,7 @@
 res://Scenes/Game.tscn
+res://scripts/Obstacle.gd
 res://Scenes/Demo.tscn
 res://Scenes/boat.tscn
 res://Scenes/rock.tscn
-res://Scripts/game_data.gd
-res://Scripts/SeaManager.gd
-res://scripts/Obstacle.gd
-res://Scripts/Pickupable.gd
-res://Scripts/Boat.gd
 res://Scenes/pickupable.tscn
+res://Scripts/rock.gd
