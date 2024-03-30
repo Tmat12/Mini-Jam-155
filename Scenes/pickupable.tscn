@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uward"]
 size = Vector2(34, 37)
 
-[node name="Pickupable" type="Area2D" node_paths=PackedStringArray("sprite")]
+[node name="Pickupable" type="Area2D" node_paths=PackedStringArray("sprite") groups=["Pickupable"]]
 position = Vector2(217, 73)
 script = ExtResource("1_vh2lu")
 sprite = NodePath("Sprite2D")

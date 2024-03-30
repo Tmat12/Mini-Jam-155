@@ -13,6 +13,9 @@ extends Node2D
 @export_category("Health Textures")
 @export var health_textures : Array[Control]
 
+@export_category("Timer Node for Functions")
+@export var spawn_timer : Node
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("wind_down"):
@@ -55,6 +58,20 @@ func reset_wind(new_wind_dir):
 func _on_timer_timeout():
 	var boats : Array[Node]
 	boats = get_tree().get_nodes_in_group("Boat")
+	var deliveries = get_tree().get_nodes_in_group("Pickupable")
 	for boat in boats:
 		boat.move_ship()
-	
+	if boats.is_empty():
+		spawn_timer.spawnBoat()
+	for delivery in deliveries:
+		if delivery.Type == "Delivery":
+			return
+	spawn_timer.spawnDelivery()
+
+func _on_boat_spawn_timer_timeout():
+	spawn_timer.spawnBoat()
+
+func _on_drop_off_change_timer_timeout():
+	for dropOff in get_tree().get_nodes_in_group("DropOff"):
+		dropOff.queue_free()
+	spawn_timer.spawnDropOff()

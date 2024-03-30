@@ -20,7 +20,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 #first thing that runs
 func _ready():
 	x = ((position.x - 72)/grid_pixels) + 1
-	y = ((position.y - 72)/grid_pixels) + 1
+	y = ((position.y - 72)/grid_pixels) - 1
 
 #runs every visual frame
 func _process(delta):
@@ -43,6 +43,10 @@ func _process(delta):
 		horizontal_texture.modulate = Color("9dff00")
 		up_texture.modulate = Color("9dff00")
 		down_texture.modulate = Color("9dff00")
+	else:
+		horizontal_texture.modulate = Color("b86e28")
+		up_texture.modulate = Color("b86e28")
+		down_texture.modulate = Color("b86e28")
 
 func reset_textures():
 	horizontal_texture.visible = false
@@ -54,23 +58,24 @@ func move_ship():
 	if GameData.wind_dir == "None":
 		pass
 	elif GameData.wind_dir == "Up":
-		if y == 1:
+		if y == 1 or ObjPos.rockPos.has(str(x) + str(y - 1)):
 			return
 		position.y -= 48
+		y += 1
 	elif GameData.wind_dir == "Down":
-		if y == 11:
+		if y == 11 or ObjPos.rockPos.has(str(x) + str(y + 1)):
 			return
 		position.y += 48
+		y -= 1
 	elif GameData.wind_dir == "Left":
-		if x == 1:
+		if x == 1 or ObjPos.rockPos.has(str(x - 1) + str(y)):
 			return
 		position.x -= 48
+		x -= 1
 	elif GameData.wind_dir == "Right":
-		if x == 22:
+		if x == 22 or ObjPos.rockPos.has(str(x + 1) + str(y)):
 			return
 		position.x += 48
+		x += 1
 	x = ((position.x - 72)/grid_pixels) + 1
 	y = ((position.y - 72)/grid_pixels) + 1
-
-		
-		

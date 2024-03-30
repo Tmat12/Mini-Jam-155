@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cb3vt6puwj6f4"]
+[gd_scene load_steps=25 format=3 uid="uid://cb3vt6puwj6f4"]
 
 [ext_resource type="Script" path="res://Scripts/SeaManager.gd" id="1_wqkxv"]
 [ext_resource type="Texture2D" uid="uid://bwwukpi6dp0jr" path="res://Sprites/switch_up_outline.png" id="1_y2and"]
@@ -10,16 +10,29 @@
 [ext_resource type="Texture2D" uid="uid://bu1bx6xxhhmxs" path="res://Sprites/switch_up.png" id="7_x8g40"]
 [ext_resource type="Texture2D" uid="uid://cbmgvt5hleepi" path="res://Sprites/switch_left.png" id="8_2065r"]
 [ext_resource type="Texture2D" uid="uid://ts26bm0pt141" path="res://Sprites/switch_right.png" id="9_fh76d"]
+[ext_resource type="Script" path="res://Scripts/SpawnSlider.gd" id="10_8367f"]
 [ext_resource type="Texture2D" uid="uid://pglst2ngg34l" path="res://Sprites/heart3.png" id="10_ou3t4"]
 [ext_resource type="PackedScene" uid="uid://b8lkcdnj1blpi" path="res://Scenes/boat.tscn" id="11_n34qi"]
-[ext_resource type="PackedScene" uid="uid://dbvag52ypk4c4" path="res://Scenes/rock.tscn" id="12_4tsfg"]
+[ext_resource type="Script" path="res://Scripts/ScoreLabel.gd" id="12_mq52e"]
 [ext_resource type="Script" path="res://scripts/Timer.gd" id="14_cms48"]
-[ext_resource type="PackedScene" uid="uid://bk81ivt51fsy2" path="res://Scenes/pickupable.tscn" id="15_4vkld"]
+[ext_resource type="PackedScene" uid="uid://ca4vol4a2g1pm" path="res://Scenes/drop_off.tscn" id="15_rtmg7"]
 [ext_resource type="Script" path="res://Scripts/Spawn_Timer.gd" id="17_38avt"]
-[ext_resource type="PackedScene" uid="uid://drnf124e4f2c8" path="res://Scenes/obstacle.tscn" id="17_abam0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fwnn3"]
 bg_color = Color(0, 0, 0, 0.772549)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="ImageTexture" id="ImageTexture_v2lie"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_x5prf"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_xkbge"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r5m7v"]
+bg_color = Color(0.117647, 0.870588, 0, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -3274,15 +3287,16 @@ separation = Vector2i(1, 1)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_8oxdu")
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("down_img", "up_img", "left_img", "right_img", "health_textures")]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("down_img", "up_img", "left_img", "right_img", "health_textures", "spawn_timer")]
 script = ExtResource("1_wqkxv")
-down_img = NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/Down")
-up_img = NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/Up")
-left_img = NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/Left")
-right_img = NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/Right")
+down_img = NodePath("CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/Down")
+up_img = NodePath("CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/Up")
+left_img = NodePath("CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/Left")
+right_img = NodePath("CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/Right")
 outline_textures = Array[Texture2D]([ExtResource("3_0srqv"), ExtResource("1_y2and"), ExtResource("2_in5os"), ExtResource("4_bjow6")])
 filled_textures = Array[Texture2D]([ExtResource("6_i7nuc"), ExtResource("7_x8g40"), ExtResource("8_2065r"), ExtResource("9_fh76d")])
-health_textures = [NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2/Heart1"), NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2/Heart2"), NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2/Heart3")]
+health_textures = [NodePath("CanvasLayer/Control/HBoxContainer/VBoxContainer2/MarginContainer2/HBoxContainer2/Heart1"), NodePath("CanvasLayer/Control/HBoxContainer/VBoxContainer2/MarginContainer2/HBoxContainer2/Heart2"), NodePath("CanvasLayer/Control/HBoxContainer/VBoxContainer2/MarginContainer2/HBoxContainer2/Heart3")]
+spawn_timer = NodePath("Spawn Timer")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -3294,70 +3308,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
 offset_top = -40.0
-grow_horizontal = 0
+offset_right = 40.0
 grow_vertical = 0
 
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_right = 15
-
-[node name="Panel" type="Panel" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2"]
-custom_minimum_size = Vector2(100, 50)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_fwnn3")
-
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer"]
-custom_minimum_size = Vector2(150, 50)
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="Heart1" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2"]
-modulate = Color(0.921569, 0.176471, 0.188235, 1)
-layout_mode = 2
-texture = ExtResource("10_ou3t4")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="Heart2" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2"]
-modulate = Color(0.921569, 0.176471, 0.188235, 1)
-layout_mode = 2
-texture = ExtResource("10_ou3t4")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="Heart3" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2"]
-modulate = Color(0.921569, 0.176471, 0.188235, 1)
-layout_mode = 2
-texture = ExtResource("10_ou3t4")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="Panel" type="Panel" parent="CanvasLayer/Control/VBoxContainer/MarginContainer"]
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_fwnn3")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 13
@@ -3366,64 +3342,136 @@ text = "Wind Direction"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="Up" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Up" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("1_y2and")
 stretch_mode = 5
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Left" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-texture = ExtResource("2_in5os")
-
-[node name="Down" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Down" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 texture = ExtResource("3_0srqv")
 
-[node name="Right" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Left" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("2_in5os")
+
+[node name="Right" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 texture = ExtResource("4_bjow6")
 
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(225, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer2" node_paths=PackedStringArray("drop_off_timer")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_icons/grabber = SubResource("ImageTexture_v2lie")
+theme_override_icons/grabber_highlight = SubResource("ImageTexture_x5prf")
+theme_override_icons/grabber_disabled = SubResource("ImageTexture_xkbge")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_r5m7v")
+max_value = 10.0
+step = 0.1
+value = 4.2
+editable = false
+script = ExtResource("10_8367f")
+drop_off_timer = NodePath("../../../../../DropOffChangeTimer")
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer2/MarginContainer2"]
+custom_minimum_size = Vector2(225, 75)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_fwnn3")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer2/MarginContainer2"]
+custom_minimum_size = Vector2(100, 75)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="Heart1" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer2/MarginContainer2/HBoxContainer2"]
+modulate = Color(0.921569, 0.176471, 0.188235, 1)
+layout_mode = 2
+texture = ExtResource("10_ou3t4")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Heart2" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer2/MarginContainer2/HBoxContainer2"]
+modulate = Color(0.921569, 0.176471, 0.188235, 1)
+layout_mode = 2
+texture = ExtResource("10_ou3t4")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Heart3" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer2/MarginContainer2/HBoxContainer2"]
+modulate = Color(0.921569, 0.176471, 0.188235, 1)
+layout_mode = 2
+texture = ExtResource("10_ou3t4")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 13
+theme_override_font_sizes/font_size = 70
+text = "Score : "
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("12_mq52e")
+
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -336.0
-offset_top = -76.0
-offset_right = 1573.0
-offset_bottom = 770.0
+offset_left = -359.0
+offset_top = -71.0
+offset_right = 1550.0
+offset_bottom = 775.0
 color = Color(0, 0.639216, 0.870588, 1)
 
 [node name="TileMap" type="TileMap" parent="."]
 scale = Vector2(3, 3)
 tile_set = SubResource("TileSet_0efym")
 format = 2
-layer_0/tile_data = PackedInt32Array(851968, 327680, 2, 851969, 327680, 2, 851970, 327680, 2, 851971, 327680, 2, 851972, 327680, 2, 851973, 327680, 2, 851974, 327680, 2, 851975, 327680, 2, 851976, 327680, 2, 851977, 327680, 2, 851978, 327680, 2, 851979, 327680, 2, 851980, 327680, 2, 851981, 327680, 2, 851982, 327680, 2, 851983, 327680, 2, 851984, 327680, 2, 851985, 327680, 2, 851986, 327680, 2, 851987, 327680, 2, 851988, 327680, 2, 851989, 327680, 2, 851990, 327680, 2, 851991, 327680, 2, 851992, 327680, 2, 786456, 327680, 2, 720920, 327680, 2, 786455, 327680, 2, 720919, 327680, 2, 655383, 327680, 2, 589847, 327680, 2, 524311, 327680, 2, 458775, 327680, 2, 393239, 327680, 2, 327703, 327680, 2, 262167, 327680, 2, 196631, 327680, 2, 196632, 327680, 2, 131095, 327680, 2, 65559, 327680, 2, 23, 327680, 2, -65513, 327680, 2, -65514, 327680, 2, -65515, 327680, 2, -65516, 327680, 2, -65517, 327680, 2, -65518, 327680, 2, -65519, 327680, 2, -65520, 327680, 2, -65521, 327680, 2, -65522, 327680, 2, -65523, 327680, 2, -65524, 327680, 2, -65525, 327680, 2, -65526, 327680, 2, -65527, 327680, 2, -65528, 327680, 2, -65529, 327680, 2, -65530, 327680, 2, -65531, 327680, 2, -65532, 327680, 2, -65533, 327680, 2, -65534, 327680, 2, -65535, 327680, 2, -65536, 327680, 2, 0, 327680, 2, 1, 327680, 2, 2, 327680, 2, 3, 327680, 2, 4, 327680, 2, 5, 327680, 2, 6, 327680, 2, 7, 327680, 2, 8, 327680, 2, 9, 327680, 2, 10, 327680, 2, 11, 327680, 2, 12, 327680, 2, 13, 327680, 2, 14, 327680, 2, 15, 327680, 2, 16, 327680, 2, 17, 327680, 2, 18, 327680, 2, 19, 327680, 2, 20, 327680, 2, 21, 327680, 2, 22, 327680, 2, -1, 327680, 2, 65535, 327680, 2, 131071, 327680, 2, 196607, 327680, 2, 262143, 327680, 2, 327679, 327680, 2, 393215, 327680, 2, 458751, 327680, 2, 524287, 327680, 2, 589823, 327680, 2, 655359, 327680, 2, 720895, 327680, 2, 786431, 327680, 2, 851967, 327680, 2, 917503, 327680, 2, 917502, 327680, 2, 917501, 327680, 2, 851966, 327680, 2, 786430, 327680, 2, 720894, 327680, 2, 720893, 327680, 2, 655357, 327680, 2, 655358, 327680, 2, 589822, 327680, 2, 524286, 327680, 2, 458750, 327680, 2, 393214, 327680, 2, 327678, 327680, 2, 262142, 327680, 2, 196606, 327680, 2, 131070, 327680, 2, 65534, 327680, 2, -2, 327680, 2, 917504, 327680, 2, 917505, 327680, 2, 917506, 327680, 2, 917507, 327680, 2, 917508, 327680, 2, 917509, 327680, 2, 917510, 327680, 2, 917511, 327680, 2, 917512, 327680, 2, 917513, 327680, 2, 917514, 327680, 2, 917515, 327680, 2, 917516, 327680, 2, 917521, 327680, 2, 917522, 327680, 2, 917523, 327680, 2, 917525, 327680, 2, 917526, 327680, 2, 917524, 327680, 2, 917520, 327680, 2, 917519, 327680, 2, 917518, 327680, 2, 917517, 327680, 2, 65536, 327680, 2, 131072, 327680, 2, 196608, 327680, 2, 262144, 327680, 2, 327680, 327680, 2, 393216, 327680, 2, 458752, 327680, 2, 524288, 327680, 2, 589824, 327680, 2, 655360, 327680, 2, 720896, 327680, 2, 786432, 327680, 2, 786433, 327680, 2, 786434, 327680, 2, 786435, 327680, 2, 786436, 327680, 2, 786437, 327680, 2, 786438, 327680, 2, 786439, 327680, 2, 786440, 327680, 2, 786441, 327680, 2, 786442, 327680, 2, 786443, 327680, 2, 786444, 327680, 2, 786445, 327680, 2, 786446, 327680, 2, 786447, 327680, 2, 786448, 327680, 2, 786449, 327680, 2, 786450, 327680, 2, 786451, 327680, 2, 786452, 327680, 2, 786453, 327680, 2, 786454, 327680, 2)
+layer_0/tile_data = PackedInt32Array(786456, 327680, 2, 720920, 327680, 2, 786455, 327680, 2, 720919, 327680, 2, 655383, 327680, 2, 589847, 327680, 2, 524311, 327680, 2, 458775, 327680, 2, 393239, 327680, 2, 327703, 327680, 2, 262167, 327680, 2, 196631, 327680, 2, 196632, 327680, 2, 131095, 327680, 2, 65559, 327680, 2, 23, 327680, 2, -65513, 327680, 2, -65514, 327680, 2, -65515, 327680, 2, -65516, 327680, 2, -65517, 327680, 2, -65518, 327680, 2, -65519, 327680, 2, -65520, 327680, 2, -65521, 327680, 2, -65522, 327680, 2, -65523, 327680, 2, -65524, 327680, 2, -65525, 327680, 2, -65526, 327680, 2, -65527, 327680, 2, -65528, 327680, 2, -65529, 327680, 2, -65530, 327680, 2, -65531, 327680, 2, -65532, 327680, 2, -65533, 327680, 2, -65534, 327680, 2, -65535, 327680, 2, -65536, 327680, 2, 0, 327680, 2, 1, 327680, 2, 2, 327680, 2, 3, 327680, 2, 4, 327680, 2, 5, 327680, 2, 6, 327680, 2, 7, 327680, 2, 8, 327680, 2, 9, 327680, 2, 10, 327680, 2, 11, 327680, 2, 12, 327680, 2, 13, 327680, 2, 14, 327680, 2, 15, 327680, 2, 16, 327680, 2, 17, 327680, 2, 18, 327680, 2, 19, 327680, 2, 20, 327680, 2, 21, 327680, 2, 22, 327680, 2, -1, 327680, 2, 65535, 327680, 2, 131071, 327680, 2, 196607, 327680, 2, 262143, 327680, 2, 327679, 327680, 2, 393215, 327680, 2, 458751, 327680, 2, 524287, 327680, 2, 589823, 327680, 2, 655359, 327680, 2, 720895, 327680, 2, 786431, 327680, 2, 851967, 327680, 2, 917503, 327680, 2, 917502, 327680, 2, 917501, 327680, 2, 851966, 327680, 2, 786430, 327680, 2, 720894, 327680, 2, 720893, 327680, 2, 655357, 327680, 2, 655358, 327680, 2, 589822, 327680, 2, 524286, 327680, 2, 458750, 327680, 2, 393214, 327680, 2, 327678, 327680, 2, 262142, 327680, 2, 196606, 327680, 2, 131070, 327680, 2, 65534, 327680, 2, -2, 327680, 2, 65536, 327680, 2, 131072, 327680, 2, 196608, 327680, 2, 262144, 327680, 2, 327680, 327680, 2, 393216, 327680, 2, 458752, 327680, 2, 524288, 327680, 2, 589824, 327680, 2, 655360, 327680, 2, 720896, 327680, 2, 786432, 327680, 2, 786433, 327680, 2, 786434, 327680, 2, 786435, 327680, 2, 786436, 327680, 2, 786437, 327680, 2, 786438, 327680, 2, 786439, 327680, 2, 786440, 327680, 2, 786441, 327680, 2, 786442, 327680, 2, 786443, 327680, 2, 786444, 327680, 2, 786445, 327680, 2, 786446, 327680, 2, 786447, 327680, 2, 786448, 327680, 2, 786449, 327680, 2, 786450, 327680, 2, 786451, 327680, 2, 786452, 327680, 2, 786453, 327680, 2, 786454, 327680, 2, 851965, 327680, 2, 786429, 327680, 2, 589821, 327680, 2, 524285, 327680, 2, 458749, 327680, 2, 393213, 327680, 2, 327677, 327680, 2, 262141, 327680, 2, 196605, 327680, 2, 131069, 327680, 2, 65533, 327680, 2, -3, 327680, 2, -65539, 327680, 2, -65538, 327680, 2, -65537, 327680, 2, -131072, 327680, 2, -131071, 327680, 2, -131070, 327680, 2, -131069, 327680, 2, -131068, 327680, 2, -131067, 327680, 2, -131066, 327680, 2, -131065, 327680, 2, -131064, 327680, 2, -131063, 327680, 2, -131062, 327680, 2, -131061, 327680, 2, -131060, 327680, 2, -131059, 327680, 2, -131058, 327680, 2, -131057, 327680, 2, -131056, 327680, 2, -131055, 327680, 2, -131054, 327680, 2, -131053, 327680, 2, -131052, 327680, 2, -131051, 327680, 2, -131050, 327680, 2, -131049, 327680, 2, -131048, 327680, 2, -65512, 327680, 2, 24, 327680, 2, 65560, 327680, 2, 131096, 327680, 2, 262168, 327680, 2, 327704, 327680, 2, 393240, 327680, 2, 458776, 327680, 2, 524312, 327680, 2, 589848, 327680, 2, 655384, 327680, 2, 983039, 327680, 2, 983038, 327680, 2, 983037, 327680, 2, 1048574, 327680, 2, 1048573, 327680, 2, 1048572, 327680, 2, 786457, 327680, 2, 720921, 327680, 2, 655385, 327680, 2, 589849, 327680, 2, 524313, 327680, 2, 458777, 327680, 2, 393241, 327680, 2, 327705, 327680, 2, 262169, 327680, 2, 196633, 327680, 2, 131097, 327680, 2, 65561, 327680, 2, 25, 327680, 2, -65511, 327680, 2, 524314, 327680, 2, 458778, 327680, 2, 393242, 327680, 2, 327706, 327680, 2, 262170, 327680, 2, 196634, 327680, 2, 131098, 327680, 2, 65562, 327680, 2, -131047, 327680, 2, -65540, 327680, 2, -4, 327680, 2, 65532, 327680, 2, 131068, 327680, 2, 196604, 327680, 2, 262140, 327680, 2, 327676, 327680, 2, 393212, 327680, 2, 458748, 327680, 2, 524284, 327680, 2, 589820, 327680, 2, 655356, 327680, 2, 720892, 327680, 2, 786428, 327680, 2, 851964, 327680, 2, 917500, 327680, 2, 983036, 327680, 2, 1048571, 327680, 2)
 
 [node name="Boat" parent="." instance=ExtResource("11_n34qi")]
-has_package = true
-
-[node name="Rock" parent="." groups=["Rocks"] instance=ExtResource("12_4tsfg")]
-position = Vector2(313, 217)
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 script = ExtResource("14_cms48")
 
-[node name="Boat2" parent="." instance=ExtResource("11_n34qi")]
-position = Vector2(72, 552)
-
-[node name="Pickupable" parent="." groups=["Pickupables"] instance=ExtResource("15_4vkld")]
-
 [node name="Spawn Timer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 3.0
+autostart = true
 script = ExtResource("17_38avt")
 
-[node name="Obstacle" parent="." groups=["Obstacles"] instance=ExtResource("17_abam0")]
+[node name="BoatSpawnTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="DropOffChangeTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="DropOff" parent="." instance=ExtResource("15_rtmg7")]
+position = Vector2(601, 313)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Spawn Timer" to="Spawn Timer" method="_on_timeout"]
+[connection signal="timeout" from="BoatSpawnTimer" to="." method="_on_boat_spawn_timer_timeout"]
+[connection signal="timeout" from="DropOffChangeTimer" to="." method="_on_drop_off_change_timer_timeout"]

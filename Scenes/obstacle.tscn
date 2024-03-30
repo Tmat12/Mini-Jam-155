@@ -6,11 +6,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_81egp"]
 size = Vector2(14, 13)
 
-[node name="Obstacle" type="Area2D" node_paths=PackedStringArray("sprite")]
+[node name="Obstacle" type="Area2D" node_paths=PackedStringArray("sprite") groups=["Obstacle"]]
 position = Vector2(169, 73)
 scale = Vector2(3, 3)
 script = ExtResource("1_ufak1")
-sprite = NodePath("")
+sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.721569, 0.431373, 0.156863, 1)
