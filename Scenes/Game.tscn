@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cb3vt6puwj6f4"]
+[gd_scene load_steps=21 format=3 uid="uid://cb3vt6puwj6f4"]
 
 [ext_resource type="Script" path="res://Scripts/SeaManager.gd" id="1_wqkxv"]
 [ext_resource type="Texture2D" uid="uid://bwwukpi6dp0jr" path="res://Sprites/switch_up_outline.png" id="1_y2and"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b8lkcdnj1blpi" path="res://Scenes/boat.tscn" id="11_n34qi"]
 [ext_resource type="PackedScene" uid="uid://dbvag52ypk4c4" path="res://Scenes/rock.tscn" id="12_4tsfg"]
 [ext_resource type="Script" path="res://scripts/Obstacle.gd" id="13_yj0rb"]
+[ext_resource type="Script" path="res://scripts/Timer.gd" id="14_cms48"]
 [ext_resource type="PackedScene" uid="uid://bk81ivt51fsy2" path="res://Scenes/pickupable.tscn" id="15_4vkld"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fwnn3"]
@@ -3413,6 +3414,7 @@ position = Vector2(313, 217)
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+script = ExtResource("14_cms48")
 
 [node name="Boat2" parent="." instance=ExtResource("11_n34qi")]
 position = Vector2(72, 552)
