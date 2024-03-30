@@ -5,3 +5,6 @@ res://Scenes/boat.tscn
 res://Scenes/rock.tscn
 res://Scenes/pickupable.tscn
 res://Scripts/Pickupable.gd
+res://Scripts/Spawn_Timer.gd
+res://Scripts/game_data.gd
+res://Scripts/obj_pos.gd

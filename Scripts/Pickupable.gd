@@ -4,8 +4,8 @@ extends Area2D
 @export var sprite : Node
 
 var rng = RandomNumberGenerator.new()
-var x = 22
-var y = 11
+var x
+var y 
 
 func _ready():
 	var randPosx = rng.randi_range(0, 21)

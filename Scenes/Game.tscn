@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cb3vt6puwj6f4"]
+[gd_scene load_steps=22 format=3 uid="uid://cb3vt6puwj6f4"]
 
 [ext_resource type="Script" path="res://Scripts/SeaManager.gd" id="1_wqkxv"]
 [ext_resource type="Texture2D" uid="uid://bwwukpi6dp0jr" path="res://Sprites/switch_up_outline.png" id="1_y2and"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/Obstacle.gd" id="13_yj0rb"]
 [ext_resource type="Script" path="res://scripts/Timer.gd" id="14_cms48"]
 [ext_resource type="PackedScene" uid="uid://bk81ivt51fsy2" path="res://Scenes/pickupable.tscn" id="15_4vkld"]
+[ext_resource type="Script" path="res://Scripts/Spawn_Timer.gd" id="17_38avt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fwnn3"]
 bg_color = Color(0, 0, 0, 0.772549)
@@ -3409,7 +3410,7 @@ layer_0/tile_data = PackedInt32Array(851968, 327680, 2, 851969, 327680, 2, 85197
 [node name="Boat" parent="." instance=ExtResource("11_n34qi")]
 has_package = true
 
-[node name="Rock" parent="." instance=ExtResource("12_4tsfg")]
+[node name="Rock" parent="." groups=["Rocks"] instance=ExtResource("12_4tsfg")]
 position = Vector2(313, 217)
 
 [node name="Timer" type="Timer" parent="."]
@@ -3438,5 +3439,10 @@ shape = SubResource("RectangleShape2D_81egp")
 
 [node name="Pickupable" parent="." instance=ExtResource("15_4vkld")]
 
+[node name="Spawn Timer" type="Timer" parent="."]
+wait_time = 10.0
+script = ExtResource("17_38avt")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Obstacle" to="Obstacle" method="_on_body_entered"]
+[connection signal="timeout" from="Spawn Timer" to="Spawn Timer" method="_on_timeout"]
