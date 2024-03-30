@@ -13,4 +13,4 @@ func _process(delta):
 
 
 func _on_timeout():
-	
+	ObjPos.rockPos.has(str(x), str(y)):
