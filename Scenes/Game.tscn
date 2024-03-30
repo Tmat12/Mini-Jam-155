@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cb3vt6puwj6f4"]
+[gd_scene load_steps=20 format=3 uid="uid://cb3vt6puwj6f4"]
 
 [ext_resource type="Script" path="res://Scripts/SeaManager.gd" id="1_wqkxv"]
 [ext_resource type="Texture2D" uid="uid://bwwukpi6dp0jr" path="res://Sprites/switch_up_outline.png" id="1_y2and"]
@@ -10,9 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://bu1bx6xxhhmxs" path="res://Sprites/switch_up.png" id="7_x8g40"]
 [ext_resource type="Texture2D" uid="uid://cbmgvt5hleepi" path="res://Sprites/switch_left.png" id="8_2065r"]
 [ext_resource type="Texture2D" uid="uid://ts26bm0pt141" path="res://Sprites/switch_right.png" id="9_fh76d"]
+[ext_resource type="Texture2D" uid="uid://pglst2ngg34l" path="res://Sprites/heart3.png" id="10_ou3t4"]
 [ext_resource type="PackedScene" uid="uid://b8lkcdnj1blpi" path="res://Scenes/boat.tscn" id="11_n34qi"]
 [ext_resource type="PackedScene" uid="uid://dbvag52ypk4c4" path="res://Scenes/rock.tscn" id="12_4tsfg"]
 [ext_resource type="Script" path="res://scripts/Obstacle.gd" id="13_yj0rb"]
+[ext_resource type="PackedScene" uid="uid://bk81ivt51fsy2" path="res://Scenes/pickupable.tscn" id="15_4vkld"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fwnn3"]
 bg_color = Color(0, 0, 0, 0.772549)
@@ -2857,7 +2859,7 @@ separation = Vector2i(1, 1)
 10:19/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 10:19/0/physics_layer_0/angular_velocity = 0.0
 11:19/0 = 0
-11:19/0/modulate = Color(0.631373, 0.415686, 0.239216, 1)
+11:19/0/modulate = Color(0.615686, 1, 0, 1)
 11:19/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 11:19/0/physics_layer_0/angular_velocity = 0.0
 12:19/0 = 0
@@ -3273,14 +3275,15 @@ sources/0 = SubResource("TileSetAtlasSource_8oxdu")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_81egp"]
 size = Vector2(14, 13)
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("down_img", "up_img", "left_img", "right_img")]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("down_img", "up_img", "left_img", "right_img", "health_textures")]
 script = ExtResource("1_wqkxv")
-down_img = NodePath("CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Down")
-up_img = NodePath("CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/Up")
-left_img = NodePath("CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Left")
-right_img = NodePath("CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Right")
+down_img = NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/Down")
+up_img = NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/Up")
+left_img = NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/Left")
+right_img = NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/Right")
 outline_textures = Array[Texture2D]([ExtResource("3_0srqv"), ExtResource("1_y2and"), ExtResource("2_in5os"), ExtResource("4_bjow6")])
 filled_textures = Array[Texture2D]([ExtResource("6_i7nuc"), ExtResource("7_x8g40"), ExtResource("8_2065r"), ExtResource("9_fh76d")])
+health_textures = [NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2/Heart1"), NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2/Heart2"), NodePath("CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2/Heart3")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -3292,7 +3295,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -3303,18 +3306,59 @@ offset_left = -40.0
 offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control/MarginContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 15
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_fwnn3")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer"]
+custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+[node name="Heart1" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2"]
+modulate = Color(0.921569, 0.176471, 0.188235, 1)
+layout_mode = 2
+texture = ExtResource("10_ou3t4")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Heart2" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2"]
+modulate = Color(0.921569, 0.176471, 0.188235, 1)
+layout_mode = 2
+texture = ExtResource("10_ou3t4")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Heart3" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer2/CenterContainer/HBoxContainer2"]
+modulate = Color(0.921569, 0.176471, 0.188235, 1)
+layout_mode = 2
+texture = ExtResource("10_ou3t4")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fwnn3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 13
@@ -3323,28 +3367,28 @@ text = "Wind Direction"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Up" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Up" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("1_y2and")
 stretch_mode = 5
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Left" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Left" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 texture = ExtResource("2_in5os")
 
-[node name="Down" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Down" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 texture = ExtResource("3_0srqv")
 
-[node name="Right" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Right" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 texture = ExtResource("4_bjow6")
 
@@ -3362,6 +3406,7 @@ format = 2
 layer_0/tile_data = PackedInt32Array(851968, 327680, 2, 851969, 327680, 2, 851970, 327680, 2, 851971, 327680, 2, 851972, 327680, 2, 851973, 327680, 2, 851974, 327680, 2, 851975, 327680, 2, 851976, 327680, 2, 851977, 327680, 2, 851978, 327680, 2, 851979, 327680, 2, 851980, 327680, 2, 851981, 327680, 2, 851982, 327680, 2, 851983, 327680, 2, 851984, 327680, 2, 851985, 327680, 2, 851986, 327680, 2, 851987, 327680, 2, 851988, 327680, 2, 851989, 327680, 2, 851990, 327680, 2, 851991, 327680, 2, 851992, 327680, 2, 786456, 327680, 2, 720920, 327680, 2, 786455, 327680, 2, 720919, 327680, 2, 655383, 327680, 2, 589847, 327680, 2, 524311, 327680, 2, 458775, 327680, 2, 393239, 327680, 2, 327703, 327680, 2, 262167, 327680, 2, 196631, 327680, 2, 196632, 327680, 2, 131095, 327680, 2, 65559, 327680, 2, 23, 327680, 2, -65513, 327680, 2, -65514, 327680, 2, -65515, 327680, 2, -65516, 327680, 2, -65517, 327680, 2, -65518, 327680, 2, -65519, 327680, 2, -65520, 327680, 2, -65521, 327680, 2, -65522, 327680, 2, -65523, 327680, 2, -65524, 327680, 2, -65525, 327680, 2, -65526, 327680, 2, -65527, 327680, 2, -65528, 327680, 2, -65529, 327680, 2, -65530, 327680, 2, -65531, 327680, 2, -65532, 327680, 2, -65533, 327680, 2, -65534, 327680, 2, -65535, 327680, 2, -65536, 327680, 2, 0, 327680, 2, 1, 327680, 2, 2, 327680, 2, 3, 327680, 2, 4, 327680, 2, 5, 327680, 2, 6, 327680, 2, 7, 327680, 2, 8, 327680, 2, 9, 327680, 2, 10, 327680, 2, 11, 327680, 2, 12, 327680, 2, 13, 327680, 2, 14, 327680, 2, 15, 327680, 2, 16, 327680, 2, 17, 327680, 2, 18, 327680, 2, 19, 327680, 2, 20, 327680, 2, 21, 327680, 2, 22, 327680, 2, -1, 327680, 2, 65535, 327680, 2, 131071, 327680, 2, 196607, 327680, 2, 262143, 327680, 2, 327679, 327680, 2, 393215, 327680, 2, 458751, 327680, 2, 524287, 327680, 2, 589823, 327680, 2, 655359, 327680, 2, 720895, 327680, 2, 786431, 327680, 2, 851967, 327680, 2, 917503, 327680, 2, 917502, 327680, 2, 917501, 327680, 2, 851966, 327680, 2, 786430, 327680, 2, 720894, 327680, 2, 720893, 327680, 2, 655357, 327680, 2, 655358, 327680, 2, 589822, 327680, 2, 524286, 327680, 2, 458750, 327680, 2, 393214, 327680, 2, 327678, 327680, 2, 262142, 327680, 2, 196606, 327680, 2, 131070, 327680, 2, 65534, 327680, 2, -2, 327680, 2, 917504, 327680, 2, 917505, 327680, 2, 917506, 327680, 2, 917507, 327680, 2, 917508, 327680, 2, 917509, 327680, 2, 917510, 327680, 2, 917511, 327680, 2, 917512, 327680, 2, 917513, 327680, 2, 917514, 327680, 2, 917515, 327680, 2, 917516, 327680, 2, 917521, 327680, 2, 917522, 327680, 2, 917523, 327680, 2, 917525, 327680, 2, 917526, 327680, 2, 917524, 327680, 2, 917520, 327680, 2, 917519, 327680, 2, 917518, 327680, 2, 917517, 327680, 2, 65536, 327680, 2, 131072, 327680, 2, 196608, 327680, 2, 262144, 327680, 2, 327680, 327680, 2, 393216, 327680, 2, 458752, 327680, 2, 524288, 327680, 2, 589824, 327680, 2, 655360, 327680, 2, 720896, 327680, 2, 786432, 327680, 2, 786433, 327680, 2, 786434, 327680, 2, 786435, 327680, 2, 786436, 327680, 2, 786437, 327680, 2, 786438, 327680, 2, 786439, 327680, 2, 786440, 327680, 2, 786441, 327680, 2, 786442, 327680, 2, 786443, 327680, 2, 786444, 327680, 2, 786445, 327680, 2, 786446, 327680, 2, 786447, 327680, 2, 786448, 327680, 2, 786449, 327680, 2, 786450, 327680, 2, 786451, 327680, 2, 786452, 327680, 2, 786453, 327680, 2, 786454, 327680, 2)
 
 [node name="Boat" parent="." instance=ExtResource("11_n34qi")]
+has_package = true
 
 [node name="Rock" parent="." instance=ExtResource("12_4tsfg")]
 position = Vector2(313, 217)
@@ -3373,7 +3418,7 @@ autostart = true
 position = Vector2(72, 552)
 
 [node name="Obstacle" type="Area2D" parent="." node_paths=PackedStringArray("sprite")]
-position = Vector2(553, 217)
+position = Vector2(169, 73)
 scale = Vector2(3, 3)
 script = ExtResource("13_yj0rb")
 sprite = NodePath("Sprite2D")
@@ -3388,6 +3433,8 @@ frame = 417
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_81egp")
+
+[node name="Pickupable" parent="." instance=ExtResource("15_4vkld")]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Obstacle" to="Obstacle" method="_on_body_entered"]

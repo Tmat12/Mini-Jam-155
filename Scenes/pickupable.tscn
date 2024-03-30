@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bk81ivt51fsy2"]
+
+[ext_resource type="Script" path="res://Scripts/Pickupable.gd" id="1_vh2lu"]
+[ext_resource type="Texture2D" uid="uid://c5fhaoqp6dk86" path="res://Sprites/monochrome-transparent.png" id="2_3yrsb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uward"]
+size = Vector2(34, 37)
+
+[node name="Pickupable" type="Area2D" node_paths=PackedStringArray("sprite")]
+position = Vector2(217, 73)
+script = ExtResource("1_vh2lu")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0, 1)
+scale = Vector2(3, 3)
+texture = ExtResource("2_3yrsb")
+hframes = 49
+vframes = 22
+frame = 472
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, 0.5)
+shape = SubResource("RectangleShape2D_uward")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

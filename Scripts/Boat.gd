@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var up_texture : Sprite2D
 @export var down_texture : Sprite2D
 
-
+@export var has_package = false
 
 # Number of pixels to move the ship
 var grid_pixels = 48
@@ -38,6 +38,11 @@ func _process(delta):
 		reset_textures()
 		horizontal_texture.visible = true
 		horizontal_texture.flip_h = false
+	
+	if has_package:
+		horizontal_texture.modulate = Color("9dff00")
+		up_texture.modulate = Color("9dff00")
+		down_texture.modulate = Color("9dff00")
 
 func reset_textures():
 	horizontal_texture.visible = false
