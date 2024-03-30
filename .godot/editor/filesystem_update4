@@ -4,4 +4,3 @@ res://Scenes/Demo.tscn
 res://Scenes/boat.tscn
 res://Scenes/rock.tscn
 res://Scenes/pickupable.tscn
-res://Scripts/rock.gd

@@ -2,17 +2,16 @@ extends Area2D
 @export var sprite: Sprite2D
 
 var delivery = preload("res://Scenes/pickupable.tscn")
-var grid_pixels = 48
-var x = 0
-var y = 0
+var x = 22
+var y = 11
 
 var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var randNum = rng.randi_range(1,2)
-	var randPosx = rng.randi_range(72, 1092)
-	var randPosy = rng.randi_range(72, 552)
+	var randPosx = rng.randi_range(72, (x * 48) +72)
+	var randPosy = rng.randi_range(72, (y * 48) +72)
 	if randNum == 1:
 		sprite.frame_coords.x = 25
 		sprite.frame_coords.y = 8
